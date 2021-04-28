@@ -1,10 +1,10 @@
 import arcpy
 import os
 
-#set up the paths
-targetFC = r"D:\MY\KNU\3_COURSE\2_Semertr\Programing_GIS\My_work\Arcpy_week_2\PE\Lesson2\Project.gdb\CountyLines"
-folderToExamine = r"D:\MY\KNU\3_COURSE\2_Semertr\Programing_GIS\My_work\Arcpy_week_2\PE\Lesson2\Project.gdb"
 arcpy.env.overwriteOutput = True
+targetFC = arcpy.GetParameterAsText(0)
+folderToExamine = r"D:\MY\KNU\3_COURSE\2_Semertr\Programing_GIS\My_work\Arcpy_week_2\PE\Lesson2\Project.gdb"
+
 
 #get spatial reference for the target feature class
 targetDescribe = arcpy.Describe(targetFC)
@@ -34,3 +34,7 @@ for currentFC in listOfFCs:
     # Determine the new output feature class path and name
         outCS = currentFC[:-4] +"_projected.shp"
         arcpy.Project_management(currentFC, outCS, targetSR)
+        arcpy.AddMessage("All done!")
+else:
+    arcpy.AddMessage(arcpy.GetMessages())
+
